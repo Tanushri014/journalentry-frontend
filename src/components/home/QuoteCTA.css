@@ -1,0 +1,179 @@
+.quote-section {
+
+    background: #0d1117;
+
+    padding: 100px 60px;
+}
+
+/* Card */
+
+.quote-card {
+
+    max-width: 1300px;
+
+    margin: auto;
+
+    background: linear-gradient(
+        135deg,
+        #3c3c3c,
+        #f8efcc
+    );
+
+    border-radius: 28px;
+
+    padding: 100px 40px;
+
+    text-align: center;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+/* Soft Glow */
+
+.quote-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    background: rgba(255,255,255,.03);
+
+    border-radius: 50%;
+
+    top: -120px;
+    left: -120px;
+
+    filter: blur(20px);
+}
+
+.quote-card::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    background: rgba(255,255,255,.02);
+
+    border-radius: 50%;
+
+    bottom: -100px;
+    right: -80px;
+
+    filter: blur(20px);
+}
+
+/* Quote */
+
+.quote-text {
+
+    position: relative;
+    z-index: 2;
+
+    color: #fffefe;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 58px;
+
+    font-weight: 500;
+
+    font-style: italic;
+
+    line-height: 1.3;
+
+    margin-bottom: 25px;
+}
+
+/* Author */
+
+.quote-author {
+
+    position: relative;
+    z-index: 2;
+
+    color: rgba(245,239,229,.45);
+
+    letter-spacing: 2px;
+
+    font-size: 15px;
+
+    margin-bottom: 45px;
+
+    font-weight: 600;
+}
+
+/* Button */
+
+.quote-btn {
+
+    position: relative;
+    z-index: 2;
+
+    background: #d6ad67;
+
+    color: #1a1a1a;
+
+    border: none;
+
+    padding: 16px 36px;
+
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.quote-btn:hover {
+
+    background: #c99747;
+
+    transform: translateY(-3px);
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+.quote-card{
+
+    padding:70px 25px;
+}
+
+.quote-text{
+
+    font-size:42px;
+}
+
+}
+
+@media(max-width:600px){
+
+.quote-section{
+
+    padding:60px 20px;
+}
+
+.quote-text{
+
+    font-size:32px;
+}
+
+.quote-btn{
+
+    width:100%;
+}
+
+}

@@ -1,0 +1,303 @@
+/* ---------- Page ---------- */
+
+.journal-page {
+
+    min-height: 100vh;
+
+    background: #F8F1E7;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+/* ---------- Container ---------- */
+
+.journal-container {
+
+    width: 800px;
+
+    background: #F8F1E7;
+
+    border: 1px solid #E7DCCB;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+/* ---------- Header ---------- */
+
+.journal-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 24px 32px;
+
+    border-bottom: 1px solid #E7DCCB;
+}
+
+.journal-header h2 {
+
+    font-size: 26px;
+
+    color: #4A3124;
+
+    font-family: "Cormorant Garamond", serif;
+}
+
+.close-btn {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    color: #8C7B6C;
+}
+
+/* ---------- Quote ---------- */
+
+.quote-result{
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+}
+
+.quote-result textarea{
+
+    width:100%;
+
+    min-height:90px;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    border:1px solid #E7DCCB;
+
+    resize:none;
+
+    font-style:italic;
+
+    color:#6B5848;
+
+    background:white;
+}
+
+.copy-btn{
+
+    align-self:flex-end;
+
+    padding:10px 18px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#B87A45;
+
+    color:white;
+
+    transition:.3s;
+}
+
+.copy-btn:hover{
+
+    background:#9f6536;
+}
+
+/* ---------- Form ---------- */
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 20px 32px 0;
+}
+
+.form-group label {
+
+    font-size: 12px;
+
+    color: #A07A55;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea {
+
+    width: 100%;
+
+    border: 1px solid #E7DCCB;
+
+    border-radius: 10px;
+
+    background: white;
+
+    padding: 15px;
+
+    font-size: 15px;
+
+    outline: none;
+
+    resize: none;
+
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: #B87A45;
+}
+
+/* ---------- Mood ---------- */
+
+.mood-section {
+
+    padding: 30px 32px;
+}
+
+.mood-section label {
+
+    display: block;
+
+    margin-bottom: 15px;
+
+    color: #A07A55;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.mood-buttons {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.mood-btn {
+
+    border: 1px solid #E2D6C7;
+
+    background: white;
+
+    padding: 10px 18px;
+
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+    font-size: 14px;
+}
+
+.mood-btn:hover {
+
+    background: #F2E6D8;
+}
+.mood-btn.active{
+
+    background:#B87A45;
+
+    color:white;
+
+    border-color:#B87A45;
+
+    box-shadow:0 6px 16px rgba(184,122,69,.25);
+
+    transform:translateY(-2px);
+}
+/* ---------- Buttons ---------- */
+
+.journal-buttons {
+
+    display: flex;
+
+    gap: 20px;
+
+    padding: 0 32px 32px;
+}
+
+.save-btn {
+
+    flex: 1;
+
+    background: #3B2415;
+
+    color: white;
+
+    border: none;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.save-btn:hover {
+
+    background: #5B3A25;
+}
+
+.cancel-btn {
+
+    flex: 1;
+
+    border: 1px solid #DDD;
+
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 14px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    transition: .3s;
+}
+
+.cancel-btn:hover {
+
+    background: #F5F5F5;
+}

@@ -1,0 +1,228 @@
+/* ---------------- Dashboard ---------------- */
+
+body {
+    background: #F7F0E4;
+    font-family: Inter, sans-serif;
+}
+
+/* ---------------- Navbar ---------------- */
+
+.dashboard-navbar {
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 90px;
+    background: #F7F0E4;
+    border-bottom: 1px solid #e4d8c6;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo h2 {
+    font-size: 34px;
+    font-family: "Cormorant Garamond", serif;
+    color: #3E2A20;
+}
+
+.logo-icon {
+    color: #B46A37;
+    font-size: 26px;
+}
+
+/* ---------------- Button ---------------- */
+
+.create-btn {
+    background: #2E1D12;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    padding: 15px 28px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.create-btn:hover {
+    background: #493224;
+}
+
+/* ---------------- Header ---------------- */
+
+.dashboard-header {
+    padding: 40px 90px;
+    display: flex;
+    gap: 70px;
+    align-items: start;
+    justify-content: space-between;
+}
+
+/* ---------------- Date Picker ---------------- */
+
+.date-filter {
+    width: 100%;
+    height: 56px;
+    border: 1px solid #d7c8b5;
+    border-radius: 12px;
+    padding: 0 18px;
+    background: white;
+    color: #3E2A20;
+    font-size: 15px;
+    outline: none;
+    transition: .25s;
+    cursor: pointer;
+}
+
+.date-filter:focus {
+    border-color: #B46A37;
+    box-shadow: 0 0 0 3px rgba(180,106,55,.15);
+}
+
+/* Calendar Popup */
+
+.react-datepicker {
+    border: none !important;
+    border-radius: 16px !important;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,.12);
+    font-family: Inter, sans-serif;
+}
+
+.react-datepicker__header {
+    background: #F8F1E7;
+    border-bottom: 1px solid #e8ddd0;
+}
+
+.react-datepicker__current-month {
+    color: #3E2A20;
+    font-weight: 700;
+}
+
+.react-datepicker__navigation-icon::before {
+    border-color: #3E2A20;
+}
+
+.react-datepicker__day:hover {
+    background: #EEDBC8;
+    border-radius: 50%;
+}
+
+.react-datepicker__day--selected {
+    background: #3B2415 !important;
+    border-radius: 50%;
+}
+
+.react-datepicker__day--keyboard-selected {
+    background: #8b5a36 !important;
+    border-radius: 50%;
+}
+
+.react-datepicker__day--today {
+    color: #B46A37;
+    font-weight: bold;
+}
+
+/* ---------------- Mood Filter ---------------- */
+
+.mood-filter {
+    width: 220px;
+    height: 56px;
+    border-radius: 12px;
+    border: 1px solid #d7c8b5;
+    padding: 0 16px;
+    background: white;
+    cursor: pointer;
+    font-size: 15px;
+    outline: none;
+}
+
+.mood-filter:focus {
+    border-color: #B46A37;
+    box-shadow: 0 0 0 3px rgba(180,106,55,.15);
+}
+
+/* ---------------- Journal List ---------------- */
+
+.journal-list {
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+.journal-card {
+    background: white;
+    border: 1px solid #e8ddd0;
+    border-radius: 18px;
+    padding: 24px 28px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    transition: .25s;
+}
+
+.journal-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+.journal-title {
+    font-size: 28px;
+    margin: 12px 0;
+    color: #2E1D12;
+    text-align: left;
+}
+
+.journal-content {
+    text-align: left;
+    color: #666;
+    line-height: 1.8;
+}
+
+.journal-quote {
+    text-align: left;
+    color: #9a7b63;
+    border-left: 4px solid #d9b26c;
+    padding-left: 14px;
+    margin: 16px 0;
+    font-style: italic;
+}
+
+.journal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.journal-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.delete-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 25px;
+    opacity: .6;
+}
+
+.delete-btn:hover {
+    opacity: 1;
+}
+
+.back-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #6a4d37;
+    margin-right: 16px;
+}
+
+.back-btn:hover {
+    color: #2E1D12;
+}
