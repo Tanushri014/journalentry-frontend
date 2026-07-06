@@ -71,6 +71,11 @@
 
 /* ---------- Quote ---------- */
 
+
+.quote-section {
+    padding: 20px 32px;
+    background: #101319;
+}
 .quote-result{
 
     margin-top:20px;
@@ -81,26 +86,27 @@
 
     gap:12px;
 }
-
-.quote-result textarea{
-
-    width:100%;
-
-    min-height:90px;
-
-    padding:15px;
-
-    border-radius:10px;
-
-    border:1px solid #E7DCCB;
-
-    resize:none;
-
-    font-style:italic;
-
-    color:#6B5848;
-
-    background:white;
+.quote-btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #D9AE61;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.quote-result textarea {
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 90px;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #E7DCCB;
+    resize: none;
+    background: white;
+    color: #6B5848;
+    font-style: italic;
 }
 
 .copy-btn{
@@ -120,6 +126,9 @@
     color:white;
 
     transition:.3s;
+
+    margin-top: 8px;
+
 }
 
 .copy-btn:hover{
