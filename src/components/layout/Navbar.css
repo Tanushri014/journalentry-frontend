@@ -3,9 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 0 80px;
-
     background-color: white;
     border-bottom: 1px solid #e5e5e5;
 }
@@ -29,6 +27,16 @@
 }
 
 .nav-links li:hover {
+    color: #2563eb;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
     color: #2563eb;
 }
 
@@ -61,12 +69,40 @@
     background: #1d4ed8;
 }
 
-.nav-links a {
-    text-decoration: none;
-    color: black;
-    transition: 0.3s;
+/* ========== Tablet ========== */
+
+@media (max-width: 992px) {
+    .navbar {
+        padding: 0 30px;
+    }
+
+    .nav-links {
+        gap: 20px;
+    }
+
+    .login-btn,
+    .signup-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
 }
 
-.nav-links a:hover {
-    color: #2563eb;
+/* ========== Mobile ========== */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        padding: 15px 20px;
+        height: auto;
+    }
+
+    .logo h2 {
+        font-size: 24px;
+    }
+
+    /* Hide navigation on phone */
+    .nav-links,
+    .nav-buttons {
+        display: none;
+    }
 }
