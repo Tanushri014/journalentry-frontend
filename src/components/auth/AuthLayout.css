@@ -207,3 +207,66 @@
     text-decoration:underline;
 
 }
+
+
+.otp-timer{
+
+    text-align:center;
+
+    color:#94a3b8;
+
+    margin-bottom:20px;
+
+    font-size:15px;
+}
+
+.otp-expired{
+
+    color:#ef4444;
+
+    font-weight:600;
+}
+
+.disabled-link{
+
+    color:#64748b;
+
+    pointer-events:none;
+
+    cursor:not-allowed;
+
+    font-weight:600;
+}
+
+.active-link{
+
+    color:#d7b06a;
+
+    cursor:pointer;
+
+    font-weight:600;
+}
+
+.active-link:hover{
+
+    text-decoration:underline;
+}
+
+.auth-form button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+}
+
+.success-message{
+
+    color:#22c55e;
+
+    text-align:center;
+
+    font-size:14px;
+
+    margin-bottom:12px;
+
+}

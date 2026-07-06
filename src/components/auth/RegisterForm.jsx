@@ -62,6 +62,7 @@ function RegisterForm() {
       <input
         type="date"
         name="dateOfBirth"
+        placeholder="Add DOB"
         value={formData.dateOfBirth}
         onChange={handleChange}
       />

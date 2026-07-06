@@ -13,3 +13,12 @@ export const loginUser = (userData) => {
 export const verifyOtp = (otpData) => {
     return api.post("/auth/verify", otpData);
 };
+
+export const deletePendingRegistration = (userEmail) => {
+    return api.delete(`/auth/pending-registration/${userEmail}`);
+};
+export const resendOtp = (userEmail) => {
+    return api.post("/auth/resend-otp", {
+        userEmail,
+    });
+};
