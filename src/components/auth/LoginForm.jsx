@@ -31,7 +31,7 @@ function LoginForm() {
 
       navigate("/dashboard");
     } catch (error) {
-      alert(error.response?.data || "Login failed.");
+      alert("Login failed...Enter valid UserEmail And Password.");
     }
   };
 
