@@ -12,33 +12,34 @@ function JournalCard({
 
 }) {
 
-    const handleDelete = async () => {
 
-        try {
 
-            await deleteEntry(entry.id);
+    const handleDelete = async (id) => {
 
-            setEntries(
+    const confirmed = window.confirm(
+        "Are you sure you want to permanently delete this journal entry?\n\nThis action cannot be undone."
+    );
 
-                entries.filter(
+    if (!confirmed) {
+        return;
+    }
 
-                    journal => journal.id !== entry.id
+    try {
+        await deleteEntry(id);
 
-                )
+        alert("Journal entry deleted permanently.");
 
-            );
+        fetchEntries(); // or update state
 
-        }
+    } catch (error) {
 
-        catch (error) {
+        console.error(error);
 
-            console.error(error);
+        alert("Failed to delete entry.");
+    }
+};
 
-            alert("Unable to delete journal entry.");
-
-        }
-
-    };
+    
 
     return (
 
@@ -92,7 +93,7 @@ function JournalCard({
 
                     className="delete-btn"
 
-                    onClick={handleDelete}
+                    onClick={()=>handleDelete(entry.id)}
 
                 >
 

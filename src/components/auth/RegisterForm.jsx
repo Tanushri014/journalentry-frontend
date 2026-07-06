@@ -37,7 +37,7 @@ function RegisterForm() {
       });
     } catch (error) {
       console.error("Registration failed", error);
-      alert("Registration failed.Use Another Email");
+      alert("Registration failed");
     }
   };
 
