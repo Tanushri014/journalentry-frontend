@@ -16,7 +16,7 @@ function DashboardPage() {
 
     const [selectedMood, setSelectedMood] = useState("");
 
-    const [selectedDate, setSelectedDate] = useState("");
+    const [selectedDate, setSelectedDate] = useState(null);
 
     useEffect(() => {
 
@@ -60,15 +60,18 @@ function DashboardPage() {
                 return;
             }
 
-            if (selectedDate !== "") {
+            if (selectedDate) {
 
-                const data =
-                    await filterByDate(selectedDate);
+    const formattedDate = selectedDate
+        .toISOString()
+        .split("T")[0];
 
-                setEntries(data);
+    const data = await filterByDate(formattedDate);
 
-                return;
-            }
+    setEntries(data);
+
+    return;
+}
 
             loadEntries();
 

@@ -1,3 +1,6 @@
+import { getQuote } from "../../api/journalApi";
+
+
 function QuoteCard({ quote, setQuote }) {
 
     const handleGenerateQuote = async () => {
