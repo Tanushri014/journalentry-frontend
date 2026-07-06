@@ -108,7 +108,6 @@ function OtpForm() {
       navigate("/login");
     } catch (error) {
       alert(
-        error.response?.data ||
           "OTP verification failed."
       );
     }
