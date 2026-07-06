@@ -11,10 +11,7 @@ function JournalCard({
     setEntries
 
 }) {
-
-
-
-    const handleDelete = async (id) => {
+const handleDelete = async (id) => {
 
     const confirmed = window.confirm(
         "Are you sure you want to permanently delete this journal entry?\n\nThis action cannot be undone."
@@ -25,11 +22,15 @@ function JournalCard({
     }
 
     try {
+
         await deleteEntry(id);
 
-        alert("Journal entry deleted permanently.");
+        // Remove the deleted entry from the UI
+        setEntries(
+            entries.filter((entry) => entry.id !== id)
+        );
 
-        fetchEntries(); // or update state
+        alert("Journal entry deleted permanently.");
 
     } catch (error) {
 
@@ -38,6 +39,9 @@ function JournalCard({
         alert("Failed to delete entry.");
     }
 };
+
+
+    
 
     
 
