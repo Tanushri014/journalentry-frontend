@@ -144,7 +144,6 @@ function OtpForm() {
       );
     } catch (error) {
       alert(
-        error.response?.data ||
           "Unable to resend OTP."
       );
     } finally {
