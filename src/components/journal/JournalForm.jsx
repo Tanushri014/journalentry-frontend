@@ -36,8 +36,8 @@ function JournalForm() {
             console.error(error);
 
             alert(
-                error.response?.data ||
-                "Failed to create journal entry."
+    
+                "Please fill all the details ,and Don't forget to select your Mood"
             );
         }
     };
