@@ -1,11 +1,13 @@
-/* ---------------- Dashboard ---------------- */
+/* ================= Dashboard ================= */
 
 body {
     background: #F7F0E4;
     font-family: Inter, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-/* ---------------- Navbar ---------------- */
+/* ================= Navbar ================= */
 
 .dashboard-navbar {
     height: 85px;
@@ -24,17 +26,32 @@ body {
 }
 
 .logo h2 {
+    margin: 0;
     font-size: 34px;
     font-family: "Cormorant Garamond", serif;
     color: #3E2A20;
 }
 
 .logo-icon {
-    color: #B46A37;
     font-size: 26px;
+    color: #B46A37;
 }
 
-/* ---------------- Button ---------------- */
+.back-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #6a4d37;
+    margin-right: 16px;
+    transition: .3s;
+}
+
+.back-btn:hover {
+    color: #2E1D12;
+}
+
+/* ================= Create Button ================= */
 
 .create-btn {
     background: #2E1D12;
@@ -52,20 +69,20 @@ body {
     background: #493224;
 }
 
-/* ---------------- Header ---------------- */
+/* ================= Header ================= */
 
 .dashboard-header {
     padding: 40px 90px;
     display: flex;
-    gap: 70px;
-    align-items: start;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
 }
 
-/* ---------------- Date Picker ---------------- */
+/* ================= Filters ================= */
 
-.date-filter {
-    width: 100%;
+.date-filter,
+.mood-filter {
     height: 56px;
     border: 1px solid #d7c8b5;
     border-radius: 12px;
@@ -75,22 +92,31 @@ body {
     font-size: 15px;
     outline: none;
     transition: .25s;
+}
+
+.date-filter {
+    width: 100%;
     cursor: pointer;
 }
 
-.date-filter:focus {
-    border-color: #B46A37;
-    box-shadow: 0 0 0 3px rgba(180,106,55,.15);
+.mood-filter {
+    width: 220px;
+    cursor: pointer;
 }
 
-/* Calendar Popup */
+.date-filter:focus,
+.mood-filter:focus {
+    border-color: #B46A37;
+    box-shadow: 0 0 0 3px rgba(180, 106, 55, .15);
+}
+
+/* ================= React Date Picker ================= */
 
 .react-datepicker {
     border: none !important;
     border-radius: 16px !important;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,.12);
-    font-family: Inter, sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .12);
 }
 
 .react-datepicker__header {
@@ -127,29 +153,11 @@ body {
     font-weight: bold;
 }
 
-/* ---------------- Mood Filter ---------------- */
-
-.mood-filter {
-    width: 220px;
-    height: 56px;
-    border-radius: 12px;
-    border: 1px solid #d7c8b5;
-    padding: 0 16px;
-    background: white;
-    cursor: pointer;
-    font-size: 15px;
-    outline: none;
-}
-
-.mood-filter:focus {
-    border-color: #B46A37;
-    box-shadow: 0 0 0 3px rgba(180,106,55,.15);
-}
-
-/* ---------------- Journal List ---------------- */
+/* ================= Journal List ================= */
 
 .journal-list {
     max-width: 900px;
+    width: 90%;
     margin: 40px auto;
 }
 
@@ -159,70 +167,201 @@ body {
     border-radius: 18px;
     padding: 24px 28px;
     margin-bottom: 22px;
-    box-shadow: 0 4px 12px rgba(0,0,0,.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
     transition: .25s;
 }
 
 .journal-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
-}
-
-.journal-title {
-    font-size: 28px;
-    margin: 12px 0;
-    color: #2E1D12;
-    text-align: left;
-}
-
-.journal-content {
-    text-align: left;
-    color: #666;
-    line-height: 1.8;
-}
-
-.journal-quote {
-    text-align: left;
-    color: #9a7b63;
-    border-left: 4px solid #d9b26c;
-    padding-left: 14px;
-    margin: 16px 0;
-    font-style: italic;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
 }
 
 .journal-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 15px;
 }
 
 .journal-meta {
     display: flex;
-    gap: 12px;
     align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.journal-title {
+    margin: 12px 0;
+    font-size: 28px;
+    color: #2E1D12;
+    text-align: left;
+}
+
+.journal-content {
+    color: #666;
+    line-height: 1.8;
+    text-align: left;
+}
+
+.journal-quote {
+    margin: 16px 0;
+    padding-left: 14px;
+    border-left: 4px solid #d9b26c;
+    color: #9a7b63;
+    font-style: italic;
+    text-align: left;
 }
 
 .delete-btn {
     border: none;
     background: transparent;
     cursor: pointer;
-    font-size: 25px;
+    font-size: 24px;
     opacity: .6;
+    transition: .3s;
 }
 
 .delete-btn:hover {
     opacity: 1;
 }
 
-.back-btn {
-    border: none;
-    background: none;
-    cursor: pointer;
-    font-size: 15px;
-    color: #6a4d37;
-    margin-right: 16px;
+/* ================= Tablet ================= */
+
+@media (max-width: 992px) {
+
+    .dashboard-navbar {
+        padding: 0 30px;
+    }
+
+    .dashboard-header {
+        padding: 30px;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .journal-list {
+        width: 95%;
+    }
+
 }
 
-.back-btn:hover {
-    color: #2E1D12;
+/* ================= Mobile ================= */
+
+@media (max-width: 768px) {
+
+    .dashboard-navbar {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .logo {
+        justify-content: center;
+        flex-wrap: wrap;
+        text-align: center;
+    }
+
+    .logo h2 {
+        font-size: 28px;
+    }
+
+    .logo-icon {
+        font-size: 24px;
+    }
+
+    .back-btn {
+        width: 100%;
+        text-align: left;
+        margin: 0;
+    }
+
+    .create-btn {
+        width: 100%;
+        border-radius: 12px;
+        padding: 14px;
+    }
+
+    .dashboard-header {
+        padding: 20px 16px;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .date-filter,
+    .mood-filter {
+        width: 100%;
+    }
+
+    .journal-list {
+        width: calc(100% - 24px);
+        margin: 20px auto;
+    }
+
+    .journal-card {
+        padding: 18px;
+    }
+
+    .journal-top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .journal-title {
+        font-size: 24px;
+    }
+
+    .journal-content,
+    .journal-quote {
+        font-size: 15px;
+    }
+
+}
+
+/* ================= Small Phones ================= */
+
+@media (max-width: 480px) {
+
+    .logo h2 {
+        font-size: 24px;
+    }
+
+    .logo-icon {
+        font-size: 22px;
+    }
+
+    .create-btn {
+        font-size: 14px;
+        padding: 12px;
+    }
+
+    .back-btn {
+        font-size: 14px;
+    }
+
+    .date-filter,
+    .mood-filter {
+        height: 50px;
+        font-size: 14px;
+    }
+
+    .journal-card {
+        padding: 16px;
+        border-radius: 14px;
+    }
+
+    .journal-title {
+        font-size: 22px;
+    }
+
+    .journal-content,
+    .journal-quote {
+        font-size: 14px;
+    }
+
+    .delete-btn {
+        font-size: 22px;
+    }
+
 }

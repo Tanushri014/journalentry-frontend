@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { registerUser } from "../../api/authApi";
 
 function RegisterForm() {
-
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     userName: "",
@@ -21,30 +23,26 @@ function RegisterForm() {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  console.log("Submitting registration...");
+    try {
+      const response = await registerUser(formData);
 
-  try {
-    const response = await registerUser(formData);
+      console.log("Registration successful", response);
 
-    console.log("Registration successful", response);
+      navigate("/verify-otp", {
+        state: {
+          userEmail: formData.userEmail,
+        },
+      });
+    } catch (error) {
+      console.error("Registration failed", error);
+      alert(error.response?.data || "Registration failed.");
+    }
+  };
 
-    navigate("/verify-otp", {
-      state: {
-        userEmail: formData.userEmail,
-      },
-    });
-
-  } catch (error) {
-    console.log("emailalready exists")
-    console.error("Registration failed", error);
-    alert(error.response?.data || "Registration failed.");
-  }
-};
   return (
     <form className="auth-form" onSubmit={handleSubmit}>
-
       <input
         type="text"
         name="userName"
@@ -61,24 +59,31 @@ function RegisterForm() {
         onChange={handleChange}
       />
 
-<input
-  type="date"
-  name="dateOfBirth"
-  value={formData.dateOfBirth}
-  onChange={handleChange}
-/>
       <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={formData.password}
+        type="date"
+        name="dateOfBirth"
+        value={formData.dateOfBirth}
         onChange={handleChange}
       />
 
-      <button type="submit">
-        Create Account
-      </button>
+      <div className="password-field">
+        <input
+          type={showPassword ? "text" : "password"}
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
 
+        <span
+          className="password-toggle"
+          onClick={() => setShowPassword(!showPassword)}
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </span>
+      </div>
+
+      <button type="submit">Create Account</button>
     </form>
   );
 }
