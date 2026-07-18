@@ -27,10 +27,20 @@
 
     background:rgba(8,11,18,.55);
 }
-
+.auth-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
 /* Card */
+.password-hint {
+  margin-top: 6px;
+  margin-bottom: 14px;
+  font-size: 0.8rem;
+  color: #777;
+  line-height: 1.4;
+}
 
-.auth-card{
+uth-card{
 
     position:relative;
 

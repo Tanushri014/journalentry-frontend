@@ -8,6 +8,7 @@ function LoginForm() {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     userEmail: "",
@@ -24,6 +25,10 @@ function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (loading) return;
+
+    setLoading(true);
+
     try {
       const response = await loginUser(formData);
 
@@ -32,6 +37,8 @@ function LoginForm() {
       navigate("/dashboard");
     } catch (error) {
       alert("Login failed...Enter valid UserEmail And Password.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,7 +69,9 @@ function LoginForm() {
         </span>
       </div>
 
-      <button type="submit">Login</button>
+      <button type="submit" disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
+      </button>
     </form>
   );
 }
