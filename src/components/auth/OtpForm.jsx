@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+```jsx
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   verifyOtp,
@@ -19,7 +20,12 @@ function OtpForm() {
   const [otpExpired, setOtpExpired] = useState(false);
 
   const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const inputRefs = useRef([]);
 
   /**
    * Redirect if page is opened directly
@@ -29,6 +35,13 @@ function OtpForm() {
       navigate("/register");
     }
   }, [userEmail, navigate]);
+
+  /**
+   * Focus first OTP box
+   */
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  }, []);
 
   /**
    * OTP Countdown Timer
@@ -52,20 +65,21 @@ function OtpForm() {
   }, [otpExpired]);
 
   /**
-   * Hide success message automatically
+   * Hide success/error messages automatically
    */
   useEffect(() => {
-    if (!message) return;
+    if (!message && !error) return;
 
     const timer = setTimeout(() => {
       setMessage("");
+      setError("");
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, [message]);
+  }, [message, error]);
 
   /**
-   * Format MM:SS
+   * Format timer
    */
   const formatTime = () => {
     const minutes = Math.floor(timeLeft / 60);
@@ -78,15 +92,62 @@ function OtpForm() {
   };
 
   /**
-   * OTP input handler
+   * OTP Input Change
    */
   const handleChange = (index, value) => {
     if (!/^\d?$/.test(value)) return;
 
     const updatedOtp = [...otp];
     updatedOtp[index] = value;
+    setOtp(updatedOtp);
+
+    if (value && index < otp.length - 1) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  /**
+   * Backspace Navigation
+   */
+  const handleKeyDown = (index, e) => {
+    if (e.key === "Backspace") {
+      if (otp[index]) {
+        const updatedOtp = [...otp];
+        updatedOtp[index] = "";
+        setOtp(updatedOtp);
+      } else if (index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
+    }
+  };
+
+  /**
+   * Paste OTP
+   */
+  const handlePaste = (e) => {
+    e.preventDefault();
+
+    const pastedData = e.clipboardData
+      .getData("text")
+      .replace(/\D/g, "")
+      .slice(0, otp.length);
+
+    if (!pastedData) return;
+
+    const updatedOtp = [...otp];
+
+    pastedData.split("").forEach((digit, index) => {
+      updatedOtp[index] = digit;
+    });
 
     setOtp(updatedOtp);
+
+    const nextIndex =
+      pastedData.length === otp.length
+        ? otp.length - 1
+        : pastedData.length;
+
+    inputRefs.current[nextIndex]?.focus();
   };
 
   /**
@@ -95,21 +156,30 @@ function OtpForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (otpExpired) return;
+    if (otpExpired || verifying) return;
+
+    if (otp.includes("")) {
+      setError("Please enter the complete OTP.");
+      return;
+    }
 
     try {
+      setVerifying(true);
+      setError("");
+
       await verifyOtp({
         userEmail,
         otp: Number(otp.join("")),
       });
 
-      alert("OTP verified successfully.");
-
       navigate("/login");
-    } catch (error) {
-      alert(
-          "OTP verification failed."
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          "Invalid or expired OTP. Please try again."
       );
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -119,8 +189,8 @@ function OtpForm() {
   const handleChooseDifferentEmail = async () => {
     try {
       await deletePendingRegistration(userEmail);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
 
     navigate("/register");
@@ -130,8 +200,12 @@ function OtpForm() {
    * Resend OTP
    */
   const handleResendOtp = async () => {
+    if (loading || !otpExpired) return;
+
     try {
       setLoading(true);
+      setError("");
+      setMessage("");
 
       await resendOtp(userEmail);
 
@@ -139,12 +213,14 @@ function OtpForm() {
       setTimeLeft(OTP_DURATION);
       setOtpExpired(false);
 
-      setMessage(
-        "A new verification code has been sent to your email."
-      );
-    } catch (error) {
-      alert(
-          "Unable to resend OTP."
+      setMessage("A new verification code has been sent to your email.");
+
+      setTimeout(() => {
+        inputRefs.current[0]?.focus();
+      }, 100);
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Unable to resend OTP."
       );
     } finally {
       setLoading(false);
@@ -153,8 +229,6 @@ function OtpForm() {
 
   return (
     <form className="auth-form" onSubmit={handleSubmit}>
-      {/* Timer */}
-
       <div className="otp-timer">
         {otpExpired ? (
           <span className="otp-expired">
@@ -165,41 +239,36 @@ function OtpForm() {
             Expires in <strong>{formatTime()}</strong>
           </span>
         )}
-
-        {message && (
-          <p className="success-message">
-            {message}
-          </p>
-        )}
       </div>
 
-      {/* OTP Boxes */}
+      {message && <p className="success-message">{message}</p>}
+
+      {error && <p className="error-message">{error}</p>}
 
       <div className="otp-container">
         {otp.map((digit, index) => (
           <input
             key={index}
+            ref={(el) => (inputRefs.current[index] = el)}
             type="text"
-            maxLength="1"
+            inputMode="numeric"
+            autoComplete="one-time-code"
+            maxLength={1}
             className="otp-input"
             value={digit}
-            onChange={(e) =>
-              handleChange(index, e.target.value)
-            }
+            onChange={(e) => handleChange(index, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(index, e)}
+            onPaste={handlePaste}
           />
         ))}
       </div>
 
-      {/* Verify Button */}
-
       <button
         type="submit"
-        disabled={otpExpired}
+        disabled={otpExpired || verifying}
       >
-        Verify OTP
+        {verifying ? "Verifying..." : "Verify OTP"}
       </button>
-
-      {/* Resend Section */}
 
       <div className="resend-section">
         <p className="resend-text">
@@ -209,16 +278,18 @@ function OtpForm() {
         {otpExpired ? (
           <>
             <p className="otp-help-text">
-              Check your Spam folder or make sure you entered a
-              valid email address.
+              Check your Spam folder or make sure you entered a valid email
+              address.
             </p>
 
             <span
-              className="active-link"
-              onClick={handleResendOtp}
+              className={loading ? "disabled-link" : "active-link"}
+              onClick={!loading ? handleResendOtp : undefined}
             >
               {loading ? "Sending..." : "Resend OTP"}
             </span>
+
+            <br />
 
             <span
               className="change-email-link"
@@ -229,7 +300,7 @@ function OtpForm() {
           </>
         ) : (
           <span className="disabled-link">
-            Resend OTP
+            Resend OTP ({formatTime()})
           </span>
         )}
       </div>
@@ -238,3 +309,4 @@ function OtpForm() {
 }
 
 export default OtpForm;
+```
