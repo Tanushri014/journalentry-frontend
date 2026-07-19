@@ -40,13 +40,13 @@
   line-height: 1.4;
 }
 
-uth-card{
+.auth-card{
 
     position:relative;
 
     z-index:2;
 
-    width:400px;
+    width:min(400px,90%);
 
     background:#18222d;
 
