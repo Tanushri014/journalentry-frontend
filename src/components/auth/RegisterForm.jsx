@@ -19,10 +19,19 @@ function RegisterForm() {
     password: "",
   });
 
+  const [errors, setErrors] = useState({
+    userName: "",
+    userEmail: "",
+    dateOfBirth: "",
+    password: "",
+    general: "",
+  });
+
+  const today = new Date().toISOString().split("T")[0];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Prevent typing beyond max password length
     if (name === "password" && value.length > MAX_PASSWORD_LENGTH) {
       return;
     }
@@ -31,6 +40,57 @@ function RegisterForm() {
       ...prev,
       [name]: value,
     }));
+
+    setErrors((prev) => ({
+      ...prev,
+      [name]: "",
+      general: "",
+    }));
+  };
+
+  const validateForm = () => {
+    let newErrors = {
+      userName: "",
+      userEmail: "",
+      dateOfBirth: "",
+      password: "",
+      general: "",
+    };
+
+    let valid = true;
+
+    if (!formData.userName.trim()) {
+      newErrors.userName = "Name is required.";
+      valid = false;
+    }
+
+    if (!formData.userEmail.trim()) {
+      newErrors.userEmail = "Email is required.";
+      valid = false;
+    }
+
+    if (!formData.dateOfBirth) {
+      newErrors.dateOfBirth = "Date of birth is required.";
+      valid = false;
+    } else if (formData.dateOfBirth >= today) {
+      newErrors.dateOfBirth =
+        "Date of birth must be earlier than today's date.";
+      valid = false;
+    }
+
+    if (formData.password.length < MIN_PASSWORD_LENGTH) {
+      newErrors.password = `Password must be at least ${MIN_PASSWORD_LENGTH} characters.`;
+      valid = false;
+    }
+
+    if (formData.password.length > MAX_PASSWORD_LENGTH) {
+      newErrors.password = `Password cannot exceed ${MAX_PASSWORD_LENGTH} characters.`;
+      valid = false;
+    }
+
+    setErrors(newErrors);
+
+    return valid;
   };
 
   const handleSubmit = async (e) => {
@@ -38,28 +98,12 @@ function RegisterForm() {
 
     if (loading) return;
 
-    const passwordLength = formData.password.length;
-
-    if (passwordLength < MIN_PASSWORD_LENGTH) {
-      alert(
-        `Password must be at least ${MIN_PASSWORD_LENGTH} characters long.`
-      );
-      return;
-    }
-
-    if (passwordLength > MAX_PASSWORD_LENGTH) {
-      alert(
-        `Password is too long. Maximum length is ${MAX_PASSWORD_LENGTH} characters.`
-      );
-      return;
-    }
+    if (!validateForm()) return;
 
     setLoading(true);
 
     try {
-      const response = await registerUser(formData);
-
-      console.log("Registration successful", response);
+      await registerUser(formData);
 
       navigate("/verify-otp", {
         state: {
@@ -67,8 +111,25 @@ function RegisterForm() {
         },
       });
     } catch (error) {
-      console.error("Registration failed", error);
-      alert("Registration failed");
+      const message =
+        error.response?.data?.message ||
+        error.response?.data ||
+        "Registration failed.";
+
+      if (
+        message.toLowerCase().includes("email") &&
+        message.toLowerCase().includes("exist")
+      ) {
+        setErrors((prev) => ({
+          ...prev,
+          userEmail: "This email already exists.",
+        }));
+      } else {
+        setErrors((prev) => ({
+          ...prev,
+          general: message,
+        }));
+      }
     } finally {
       setLoading(false);
     }
@@ -76,50 +137,71 @@ function RegisterForm() {
 
   return (
     <form className="auth-form" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="userName"
-        placeholder="Your name"
-        value={formData.userName}
-        onChange={handleChange}
-        required
-      />
+      {errors.general && (
+        <p className="error-message">{errors.general}</p>
+      )}
 
-      <input
-        type="email"
-        name="userEmail"
-        placeholder="Email address"
-        value={formData.userEmail}
-        onChange={handleChange}
-        required
-      />
-
-      <input
-        type="date"
-        name="dateOfBirth"
-        value={formData.dateOfBirth}
-        onChange={handleChange}
-        required
-      />
-
-      <div className="password-field">
+      <div className="input-group">
         <input
-          type={showPassword ? "text" : "password"}
-          name="password"
-          placeholder="Password"
-          value={formData.password}
+          type="text"
+          name="userName"
+          placeholder="Your name"
+          value={formData.userName}
           onChange={handleChange}
-          minLength={MIN_PASSWORD_LENGTH}
-          maxLength={MAX_PASSWORD_LENGTH}
-          required
         />
+        {errors.userName && (
+          <span className="field-error">{errors.userName}</span>
+        )}
+      </div>
 
-        <span
-          className="password-toggle"
-          onClick={() => setShowPassword((prev) => !prev)}
-        >
-          {showPassword ? <FaEyeSlash /> : <FaEye />}
-        </span>
+      <div className="input-group">
+        <input
+          type="email"
+          name="userEmail"
+          placeholder="Email address"
+          value={formData.userEmail}
+          onChange={handleChange}
+        />
+        {errors.userEmail && (
+          <span className="field-error">{errors.userEmail}</span>
+        )}
+      </div>
+
+      <div className="input-group">
+        <input
+          type="date"
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
+          onChange={handleChange}
+          max={new Date(Date.now() - 86400000).toISOString().split("T")[0]}
+        />
+        {errors.dateOfBirth && (
+          <span className="field-error">{errors.dateOfBirth}</span>
+        )}
+      </div>
+
+      <div className="input-group">
+        <div className="password-field">
+          <input
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            maxLength={MAX_PASSWORD_LENGTH}
+          />
+
+          <span
+            className="password-toggle"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        {errors.password && (
+          <span className="field-error">{errors.password}</span>
+        )}
       </div>
 
       <p className="password-hint">
